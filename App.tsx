@@ -1,27 +1,67 @@
 import * as React from 'react';
-import { View, Text } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { FAB } from 'react-native-paper';
 
-function HomeScreen() {
-  return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Text>Home Screen</Text>
-    </View>
-  );
-}
+import HomeScreen from "./screens/home/home"
+import { StyleSheet } from 'react-native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 const Stack = createNativeStackNavigator();
 
-function App() {
+function App(): React.JSX.Element {
   return (
     <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen name="Home" component={HomeScreen} />
-      </Stack.Navigator>
+      <MyTabs />
+      <FAB
+        style={styles.fab}
+        // small
+        icon="plus"
+        onPress={() => console.log('Pressed')}
+      />
     </NavigationContainer>
+
+    // <NavigationContainer>
+    //   <Stack.Navigator>
+    //     <Stack.Screen 
+    //       name="Home" 
+    //       component={ HomeScreen }
+    //       options={{ title: "Home" }}
+    //     />
+    //   </Stack.Navigator>
+    // </NavigationContainer>
   );
 }
+const Tab = createBottomTabNavigator();
+
+function MyTabs() {
+  return (
+    <Tab.Navigator
+      screenOptions={{
+        tabBarShowLabel: false,
+        tabBarStyle: { position: 'absolute' }
+      }}
+    >
+      <Tab.Screen name="Home" component={HomeScreen} />
+      <Tab.Screen name="Settings" component={HomeScreen} />
+      <Tab.Screen name="Profile" component={HomeScreen} />
+    </Tab.Navigator>
+  );
+}
+
+const styles = StyleSheet.create({
+  center: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  fab: {
+    position: 'absolute',
+    margin: 16,
+    right: 0,
+    bottom: 0,
+  },
+});
 
 export default App;
 
